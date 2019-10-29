@@ -24,28 +24,15 @@ class Steam {
                 return resolve(this.steamPath);
             }
 
-            const key = new Registry({
-                hive: Registry.HKCU,
-                key:  '\\Software\\Valve\\Steam'
-            });
+            let steamPath = '/Users/benstevens/Library/Application\ Support/Steam';
 
-            key.values((err, items) => {
-                let steamPath = false;
-
-                items.forEach((item) => {
-                    if (item.name === 'SteamPath') {
-                        steamPath = item.value;
-                    }
-                });
-
-                if (steamPath) {
-                    this.steamPath = steamPath;
-                    log.info(`Got Steam path: ${steamPath}`);
-                    resolve(steamPath);
-                } else {
-                    reject(new Error('Could not find Steam path.'));
-                }
-            });
+            if (steamPath) {
+                this.steamPath = steamPath;
+                log.info(`Got Steam path: ${steamPath}`);
+                resolve(steamPath);
+            } else {
+                reject(new Error('Could not find Steam path.'));
+            }
         });
     }
 
